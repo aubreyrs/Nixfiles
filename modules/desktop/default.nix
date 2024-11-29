@@ -5,7 +5,6 @@
     ./fish.nix
     ./tofi.nix
     ./waybar.nix
-    ../../overlays.nix
   ];
 
   services.xserver = {
