@@ -1,5 +1,12 @@
 { config, pkgs, ... }: {
-  boot.kernel.sysctl.net.ipv4.ip_forward = 1;
+  boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
+
+  age.secrets.wifi-password = {
+    file = ../modules/secrets/wifi-password.age;
+    owner = "root";
+    group = "networkmanager";
+    mode = "0440";
+  };
 
   networking = {
     hostName = "nixos";
@@ -14,11 +21,14 @@
             type = "wifi";
             autoconnect = true;
           };
-          wifi.ssid = "Sushi";
+          wifi = {
+            ssid = "Sushi";
+            mode = "infrastructure";
+          };
           wifi-security = {
             auth-alg = "open";
             key-mgmt = "wpa-psk";
-            psk = "youfatcat12345679";
+            psk = config.age.secrets.wifi-password.path;
           };
         };
       };

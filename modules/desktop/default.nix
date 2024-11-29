@@ -18,10 +18,7 @@
 
   hardware = {
     pulseaudio.enable = false;
-    opengl = {
-      enable = true;
-      driSupport = true;
-    };
+    graphics.enable = true;
   };
 
   security.rtkit.enable = true;

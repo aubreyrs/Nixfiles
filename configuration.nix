@@ -1,9 +1,11 @@
 { config, pkgs, ... }: {
+  age.identityPaths = [ "/root/.ssh/id_ed25519" ];
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  
   imports = [ 
     ./hardware-configuration.nix
     ./modules/desktop
     ./modules/networking.nix
-    <home-manager/nixos>
   ];
 
   home-manager.users.aubrey = { pkgs, ... }: {
@@ -38,7 +40,7 @@
     };
 
     packages = with pkgs; [
-      liberation_ttf noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra
+      liberation_ttf noto-fonts noto-fonts-cjk-sans noto-fonts-emoji noto-fonts-extra
       cozette jetbrains-mono fira-code fira-code-symbols hack-font victor-mono
       inter roboto roboto-mono ubuntu_font_family font-awesome
       material-design-icons material-icons noto-fonts-lgc-plus dejavu_fonts
@@ -74,6 +76,10 @@
     description = "aubrey";
     extraGroups = [ "networkmanager" "wheel" ];
   };
+
+  environment.systemPackages = with pkgs; [
+    age
+  ];
 
   nixpkgs.config.allowUnfree = true;
   system.stateVersion = "24.05";

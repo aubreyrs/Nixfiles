@@ -1,12 +1,7 @@
-{ config, pkgs, ... }:
-let
-  unstable = import <nixos-unstable> {
-    config = config.nixpkgs.config;
-  };
-in {
+{ config, pkgs, ... }: {
   nixpkgs.overlays = [
     (final: prev: {
-      inherit (unstable) code2prompt;
+      inherit (pkgs) code2prompt;
     })
   ];
 }
